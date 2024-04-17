@@ -1,26 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
-import WorkIcon from "@mui/icons-material/Work";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import MenuIcon from "@mui/icons-material/Menu";
 
 function Header() {
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+
   return (
-    <header className="flex justify-between py-5 px-7">
-      <div className="flex space-x-2 font-semibold text-xl ">
-        <Link to="/">QR</Link>
-        <Link to="/shop">SHOP</Link>
-        <Link to="/lookbook">LOOKBOOK</Link>
-        <Link to="/giftboxes">GIFTBOXES</Link>
-        <Link className="text-red-500" to="/sale">SALE</Link>
-        <Link to="/stores">STORES</Link>
-        <Link to="/kids">KIDS</Link>
+    <header className="flex flex-col">
+      <div className="flex justify-between items-center px-7">
+        <nav className="flex space-x-3 items-center font-semibold text-xl">
+          <Link className="text-3xl" to="/mainpage">
+            QR
+          </Link>
+          <Link
+            className="py-5"
+            to="/shop"
+            onMouseEnter={() => {
+              setCategoriesOpen(true);
+            }}
+            onMouseLeave={() => {
+              setCategoriesOpen(false);
+            }}
+          >
+            SHOP
+          </Link>
+          <Link to="/lookbook">LOOKBOOK</Link>
+          <Link to="">GIFTBOXES</Link>
+          <Link className="text-red-600" to="">
+            SALE
+          </Link>
+          <Link to="">STORES</Link>
+          <Link to="">KIDS</Link>
+        </nav>
+        <div className="flex space-x-6">
+          <SearchIcon />
+          <WorkOutlineIcon />
+          <MenuIcon />
+        </div>
       </div>
-      <div>
-        <SearchIcon />
-        <WorkIcon />
-        <MenuIcon />
-      </div>
+      {categoriesOpen && (
+        <div
+          className="px-7 py-3 flex space-x-3 text-2xl font-semibold border-y-2 border-black"
+          onMouseEnter={() => setCategoriesOpen(true)}
+          onMouseLeave={() => setCategoriesOpen(false)}
+        >
+          <Link to="/shop">All</Link>
+          <Link to="/shop?category=t-shirts">T-Shirts</Link>
+          <Link to="/shop?category=shirt">SHIRT</Link>
+          <Link to="/shop?category=top">Top</Link>
+        </div>
+      )}
     </header>
   );
 }
